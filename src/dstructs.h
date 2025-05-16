@@ -1,11 +1,11 @@
-#ifndef dstructs_h
-#define dstructs_h
+#ifndef DSTRUCTS_H
+#define DSTRUCTS_H
 
 #include <stddef.h>
 #include <stdlib.h>
 
 #ifdef __cplusplus
-extern "c" {
+extern "C" {
 #endif
 
 #ifndef DYNARRAY_DEFAULT_SIZE 
