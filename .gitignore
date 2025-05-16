@@ -1,0 +1,4 @@
+lib/
+build/
+plib_test.c
+a.out
