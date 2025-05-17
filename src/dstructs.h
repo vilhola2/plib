@@ -26,8 +26,8 @@ void *impl_da_push(void *ptr, const void *item, const size_t element_sz);
 struct da_header *impl_da_grow(struct da_header *h, const size_t new_bytes);
 struct da_header *impl_da_reserve(struct da_header *h, const size_t element_sz, const size_t additional_elements);
 
-[[maybe_unused]] static inline struct da_header *impl_get_da_header(const void *ptr) {
-    return (struct da_header *)((unsigned char *)ptr - offsetof(struct da_header, data));
+[[maybe_unused]] static inline struct da_header *impl_get_da_header(const void *arr) {
+    return (struct da_header *)((unsigned char *)arr - offsetof(struct da_header, data));
 }
 
 // --- API macros ---
@@ -35,14 +35,14 @@ struct da_header *impl_da_reserve(struct da_header *h, const size_t element_sz, 
 #define dynarray_create(type) \
     (impl_da_create(sizeof(type), DYNARRAY_DEFAULT_SIZE))
 
-// CAUTION! 'ptr' must originate from dynarray_create()!
+// CAUTION! 'arr' must originate from dynarray_create()!
 #define dynarray_push(arr, elem) \
     do { \
         typeof(*(arr)) elem__ = (elem); \
         (arr) = impl_da_push((arr), &(elem__), sizeof(elem__)); \
     } while(0)
 
-// CAUTION! 'ptr' must originate from dynarray_create()!
+// CAUTION! 'arr' must originate from dynarray_create()!
 #define dynarray_reserve(arr, additional_elements) \
     do { \
         struct da_header *h__ = impl_get_da_header(arr); \
@@ -51,20 +51,29 @@ struct da_header *impl_da_reserve(struct da_header *h, const size_t element_sz, 
         else (arr) = (void *)((struct da_header *)h__->data); \
     } while(0)
 
-// CAUTION! 'ptr' must originate from dynarray_create()!
-#define dynarray_len(ptr) \
-    ((impl_get_da_header(ptr))->len / sizeof(*(ptr)))
+// CAUTION! 'arr must originate from dynarray_create()!
+#define dynarray_len(arr) \
+    ((impl_get_da_header(arr))->len / sizeof(*(arr)))
 
-// CAUTION! 'ptr' must originate from dynarray_create()!
-#define dynarray_cap(ptr) \
-    ((impl_get_da_header(ptr))->cap / sizeof(*(ptr)))
+// CAUTION! 'arr' must originate from dynarray_create()!
+#define dynarray_cap(arr) \
+    ((impl_get_da_header(arr))->cap / sizeof(*(arr)))
+
+// CAUTION! 'arr' must originate from dynarray_create()!
+#define dynarray_iterate(arr, elem_ptr) \
+    for( \
+        typeof(*arr) *(elem_ptr) = (arr), \
+        *end__##elem_ptr = (arr) + dynarray_len(arr); \
+        (elem_ptr) < end__##elem_ptr; ++(elem_ptr) \
+        /* the end pointer's name is mangled to avoid variable shadowing */ \
+    )
 
 // --- API functions ---
 
-// CAUTION! 'ptr' must originate from dynarray_create()!
-// 'ptr' must not be used after this function is called
-[[maybe_unused]] static inline void dynarray_destroy(void *ptr) {
-    if (ptr != nullptr) free(impl_get_da_header(ptr));
+// CAUTION! 'arr' must originate from dynarray_create()!
+// 'arr' must not be used after this function is called
+[[maybe_unused]] static inline void dynarray_destroy(void *arr) {
+    if (arr != nullptr) free(impl_get_da_header(arr));
 }
 
 #ifdef __cplusplus
@@ -72,4 +81,3 @@ struct da_header *impl_da_reserve(struct da_header *h, const size_t element_sz, 
 #endif
 
 #endif
-
