@@ -1,7 +1,7 @@
 #define PLIB_IMPL 1
 #include <stdlib.h>
 #include <string.h>
-#include "dstructs.h"
+#include "plib_dstructs.h"
 
 #ifdef DEBUG_VERBOSE
 #include <stdio.h>
