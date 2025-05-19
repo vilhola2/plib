@@ -1,5 +1,5 @@
-#ifndef DSTRUCTS_H
-#define DSTRUCTS_H
+#ifndef PLIB_DSTRUCTS_H
+#define PLIB_DSTRUCTS_H
 
 #include <stddef.h>
 #include <stdlib.h>
