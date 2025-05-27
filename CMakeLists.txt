@@ -11,3 +11,13 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 file(GLOB C_SOURCES "${CMAKE_SOURCE_DIR}/src/*.c")
 
 add_library(${PROJECT_NAME} ${C_SOURCES})
+
+if(DEFINED CMAKE_CUSTOM_INSTALL_PREFIX)
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_CUSTOM_INSTALL_PREFIX}" CACHE PATH "Install path prefix" FORCE)
+endif()
+
+install(TARGETS ${PROJECT_NAME}
+        DESTINATION lib/)
+install(DIRECTORY include/${PROJECT_NAME}/
+        DESTINATION include/${PROJECT_NAME}/)
+

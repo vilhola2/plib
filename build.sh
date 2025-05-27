@@ -2,11 +2,19 @@
 
 BUILD_TYPE=RELEASE
 EXPORT_COMPILE_COMMANDS="OFF"
+EXTRA_ARGS=""
 
-if [ "$1" = "-d" ]; then
-  BUILD_TYPE="DEBUG"
-  EXPORT_COMPILE_COMMANDS="ON"
-fi
+for arg in "$@"; do
+  case $arg in
+    -d)
+      BUILD_TYPE=DEBUG
+      EXPORT_COMPILE_COMMANDS="ON"
+      ;;
+    -install-dir=*)
+      EXTRA_ARGS="$EXTRA_ARGS -DCMAKE_INSTALL_PREFIX=${arg#*=}"
+      ;;
+  esac
+done
 
 if command -v clang >/dev/null && clang --version | grep -E "version (1[89]|[2-9][0-9])" >/dev/null; then
     export CC=clang
@@ -20,8 +28,13 @@ fi
 echo "Using compiler: $CC"
 echo "Using build type: $BUILD_TYPE"
 
+rm -rf lib/
 mkdir -p build
 cd build
-cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=$EXPORT_COMPILE_COMMANDS -DCMAKE_BUILD_TYPE=$BUILD_TYPE ..
-mv compile_commands.json ..
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=$EXPORT_COMPILE_COMMANDS -DCMAKE_BUILD_TYPE=$BUILD_TYPE $EXTRA_ARGS ..
+
+if [ "$EXPORT_COMPILE_COMMANDS" = "ON" ]; then
+  mv compile_commands.json ..
+fi
+
 make

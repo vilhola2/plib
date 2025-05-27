@@ -1,6 +1,7 @@
 lib/
 build/
 .cache/
+install/
 plib_test.c
 a.out
 compile_commands.json
