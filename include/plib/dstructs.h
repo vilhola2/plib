@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -26,7 +27,7 @@ void *impl_da_push(void *ptr, const void *item, const size_t element_sz);
 struct da_header *impl_da_grow(struct da_header *h, const size_t new_bytes);
 struct da_header *impl_da_reserve(struct da_header *h, const size_t element_sz, const size_t additional_elements);
 
-[[maybe_unused]] static inline struct da_header *impl_get_da_header(const void *arr) {
+static inline struct da_header *impl_get_da_header(const void *arr) {
     return (struct da_header *)((unsigned char *)arr - offsetof(struct da_header, data));
 }
 
@@ -37,19 +38,26 @@ struct da_header *impl_da_reserve(struct da_header *h, const size_t element_sz, 
 
 // CAUTION! 'arr' must originate from dynarray_create()!
 #define dynarray_push(arr, elem) \
-    do { \
+    ({ \
+        bool success__ = true; \
         typeof(*(arr)) elem__ = (elem); \
         (arr) = impl_da_push((arr), &(elem__), sizeof(elem__)); \
-    } while(0)
+        if (!arr) success__ = false; \
+        success__; \
+    })
 
 // CAUTION! 'arr' must originate from dynarray_create()!
 #define dynarray_reserve(arr, additional_elements) \
-    do { \
+    ({ \
         struct da_header *h__ = impl_get_da_header(arr); \
+        bool success__ = true; \
         h__ = impl_da_reserve(h__, sizeof(*(arr)), (additional_elements)); \
-        if(!h__) (arr) = nullptr; \
-        else (arr) = (void *)((struct da_header *)h__->data); \
-    } while(0)
+        if(!h__) { \
+            (arr) = NULL; \
+            success__ = false; \
+        } else (arr) = (void *)((struct da_header *)h__->data); \
+        success__; \
+    })
 
 // CAUTION! 'arr must originate from dynarray_create()!
 #define dynarray_len(arr) \
@@ -72,8 +80,8 @@ struct da_header *impl_da_reserve(struct da_header *h, const size_t element_sz, 
 
 // CAUTION! 'arr' must originate from dynarray_create()!
 // 'arr' must not be used after this function is called
-[[maybe_unused]] static inline void dynarray_destroy(void *arr) {
-    if (arr != nullptr) free(impl_get_da_header(arr));
+__attribute((unused)) static inline void dynarray_destroy(void *arr) {
+    if (arr != NULL) free(impl_get_da_header(arr));
 }
 
 #ifdef __cplusplus
