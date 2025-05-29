@@ -55,7 +55,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
         struct da_header *h__ = impl_get_da_header(arr); \
         bool success__ = true; \
         h__ = impl_da_reserve(h__, sizeof(*(arr)), (additional_elements)); \
-        if(!h__) { \
+        if (!h__) { \
             (arr) = NULL; \
             success__ = false; \
         } else (arr) = (void *)((struct da_header *)h__->data); \
