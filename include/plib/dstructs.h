@@ -34,10 +34,10 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
 // --- API macros ---
 
 #define dynarray_create(type) \
-    (impl_da_create(sizeof(type), DYNARRAY_DEFAULT_SIZE));
+    impl_da_create(sizeof(type), DYNARRAY_DEFAULT_SIZE)
 
 #define dynarray_create_presized(type, elements) \
-    (impl_da_create(sizeof(type), (elements)));
+    impl_da_create(sizeof(type), (elements))
 
 // CAUTION! 'arr' must originate from dynarray_create()!
 #define dynarray_push(arr, elem) \
@@ -71,8 +71,8 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
     ((impl_get_da_header(arr))->cap / sizeof(*(arr)))
 
 // CAUTION! 'arr' must originate from dynarray_create()!
-#define dynarray_iterate(arr, elem_ptr) \
-    for( \
+#define dynarray_for_each(arr, elem_ptr) \
+    for ( \
         typeof(*arr) *(elem_ptr) = (arr), \
         *end__##elem_ptr = (arr) + dynarray_len(arr); \
         (elem_ptr) < end__##elem_ptr; ++(elem_ptr) \
