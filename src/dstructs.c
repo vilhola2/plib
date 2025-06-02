@@ -23,7 +23,7 @@ struct da_header *impl_da_grow(struct da_header *h, const size_t new_bytes) {
 struct da_header *impl_da_reserve(struct da_header *h, const size_t element_sz, const size_t additional_elements) {
     const size_t new_cap = h->cap + additional_elements * element_sz;
     struct da_header *temp = realloc(h, sizeof(struct da_header) + new_cap);
-    if(!temp) return NULL;
+    if (!temp) return NULL;
     (h = temp)->cap = new_cap;
 #ifdef DEBUG_VERBOSE
     printf("succesfully reserved space for dynarray: len: %zu, cap: %zu\n", h->len, h->cap); 
