@@ -13,7 +13,7 @@ char *str_input(FILE *stream);
 
 __attribute((flatten))
 __attribute((always_inline))
-static inline void impl_bin_generic(const uint64_t value, const int_fast8_t bits, char *buf) {
+static inline void impl_bin_generic(const uint64_t value, const uint_fast8_t bits, char *buf) {
     for (int i = bits - 1; i >= 0; --i) {
         buf[bits - 1 - i] = (value & (1ULL << i)) ? '1' : '0';
     }
