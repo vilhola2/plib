@@ -83,7 +83,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
 
 // CAUTION! 'arr' must originate from dynarray_create()!
 // 'arr' must not be used after this function is called
-__attribute((unused)) static inline void dynarray_destroy(void *arr) {
+__attribute__((unused)) static inline void dynarray_destroy(void *arr) {
     if (arr != NULL) free(impl_get_da_header(arr));
 }
 
