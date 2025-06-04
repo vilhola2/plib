@@ -3,5 +3,6 @@
 
 #include "dstructs.h"
 #include "intfmt.h"
+#include "io.h"
 
 #endif
