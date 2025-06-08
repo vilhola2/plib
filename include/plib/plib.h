@@ -4,5 +4,6 @@
 #include "dstructs.h"
 #include "intfmt.h"
 #include "io.h"
+#include "hints.h"
 
 #endif
