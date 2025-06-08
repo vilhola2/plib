@@ -3,6 +3,7 @@
 BUILD_TYPE=RELEASE
 EXPORT_COMPILE_COMMANDS="OFF"
 EXTRA_ARGS=""
+VERBOSE=0
 
 for arg in "$@"; do
   case $arg in
@@ -13,19 +14,12 @@ for arg in "$@"; do
     -install-dir=*)
       EXTRA_ARGS="$EXTRA_ARGS -DCMAKE_INSTALL_PREFIX=${arg#*=}"
       ;;
+    -v)
+      VERBOSE=1
+      ;;
   esac
 done
 
-if command -v clang >/dev/null && clang --version | grep -E "version (1[89]|[2-9][0-9])" >/dev/null; then
-    export CC=clang
-elif command -v gcc >/dev/null && gcc -dumpversion | grep -E "^(1[4-9]|[2-9][0-9])" >/dev/null; then
-    export CC=gcc
-else
-    echo "No suitable C compiler found. Please install Clang >= 18 or GCC >= 14." >&2
-    exit 1
-fi
-
-echo "Using compiler: $CC"
 echo "Using build type: $BUILD_TYPE"
 
 rm -rf lib/
@@ -37,4 +31,4 @@ if [ "$EXPORT_COMPILE_COMMANDS" = "ON" ]; then
   mv compile_commands.json ..
 fi
 
-make
+make VERBOSE=$VERBOSE

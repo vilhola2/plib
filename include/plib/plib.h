@@ -1,7 +1,8 @@
 #ifndef PLIB_H
 #define PLIB_H
 
-#include "dstructs.h"
-#include "intfmt.h"
+#include <plib/dstructs.h>
+#include <plib/intfmt.h>
+#include <plib/io.h>
 
 #endif

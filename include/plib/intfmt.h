@@ -3,7 +3,19 @@
 
 #include <inttypes.h>
 
-// -- Signed integer types --
+/**
+ * @defgroup fmt_macros Integer format specifier macros
+ *
+ * These macros are wrappers for the fixed-with integer format specifiers defined in <inttypes.h>
+ *
+ * @{
+ */
+
+/**
+ * @defgroup signed_types Signed integer types
+ * @{
+ */
+
 #define WD8   "%" PRId8
 #define WD16  "%" PRId16
 #define WD32  "%" PRId32
@@ -11,7 +23,15 @@
 #define WDMAX "%" PRIdMAX
 #define WDPTR "%" PRIdPTR
 
-// -- Unsigned integer types --
+/**
+ * @}
+ */
+
+/**
+ * @defgroup unsigned_types Unsigned integer types
+ * @{
+ */
+
 #define WU8   "%" PRIu8
 #define WU16  "%" PRIu16
 #define WU32  "%" PRIu32
@@ -19,7 +39,15 @@
 #define WUMAX "%" PRIuMAX
 #define WUPTR "%" PRIuPTR
 
-// -- Uppercase hexadecimal --
+/**
+ * @}
+ */
+
+/**
+ * @defgroup uppercase_hex Uppercase hexadecimal
+ * @{
+ */
+
 #define WX8   "%" PRIX8
 #define WX16  "%" PRIX16
 #define WX32  "%" PRIX32
@@ -27,13 +55,29 @@
 #define WXPTR "%" PRIXPTR
 #define WXMAX "%" PRIXMAX
 
-// -- Lowercase hexadecimal --
+/**
+ * @}
+ */
+
+/**
+ * @defgroup lowercase_hex Lowercase hexadecimal
+ * @{
+ */
+
 #define Wx8   "%" PRIx8
 #define Wx16  "%" PRIx16
 #define Wx32  "%" PRIx32
 #define Wx64  "%" PRIx64
 #define WxPTR "%" PRIxPTR
 #define WxMAX "%" PRIxMAX
+
+/**
+ * @}
+ */
+
+/**
+ * @}
+ */
 
 #endif
 
