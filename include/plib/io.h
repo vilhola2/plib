@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#include <plib/hints.h>
+#include "hints.h"
 
 /**
  * @defgroup internal_functions Internal functions

@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <plib/hints.h>
+#include "hints.h"
 
 #ifdef __cplusplus
 extern "C" {
