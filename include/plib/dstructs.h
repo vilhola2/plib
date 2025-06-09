@@ -20,7 +20,7 @@ extern "C" {
 #endif
 
 /**
- * @defgroup internal_structs Internal structs
+ * @defgroup ds_internal_structs Internal structs
  * @{
  */
 
@@ -34,7 +34,7 @@ struct da_header {
  */
 
 /**
- * @defgroup internal_functions Internal functions
+ * @defgroup ds_internal_functions Internal functions
  * @{
  */
 
@@ -52,7 +52,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
  */
 
 /**
- * @defgroup api_macros API macros
+ * @defgroup ds_api_macros API macros
  * @{
  */
 
@@ -152,7 +152,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
  */
 
 /**
- * @defgroup api_functions API functions
+ * @defgroup ds_api_functions API functions
  * @{
  */
 

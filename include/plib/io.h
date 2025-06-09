@@ -6,7 +6,13 @@
 #include "hints.h"
 
 /**
- * @defgroup internal_functions Internal functions
+ * @defgroup io Input/output
+ * @{
+ */
+
+
+/**
+ * @defgroup io_internal_functions Internal functions
  * @{
  */
 
@@ -21,7 +27,7 @@ static ALWAYS_INLINE void impl_bin_generic(const uint64_t value, const int_fast8
  */
 
 /**
- * @defgroup input_functions Input functions
+ * @defgroup io_input_functions Input functions
  * @{
  */
 
@@ -44,12 +50,12 @@ char *str_input(FILE *stream);
  */
 
 /**
- * @defgroup output_functions Output functions
+ * @defgroup io_output_functions Output functions
  * @{
  */
 
 /**
- * @defgroup binary_output Binary output functions
+ * @defgroup io_binary_output Binary output functions
  * 
  * These functions allow you to get the binary representation of a value.
  * They all take a string buffer as a parameter, where the binary will be stored.
@@ -101,6 +107,11 @@ MAYBE_UNUSED static ALWAYS_INLINE char *bin64(const uint64_t qw, char buf[static
 /**
  * @}
  */
+
+/**
+ * @}
+ */
+
 
 /**
  * @}
