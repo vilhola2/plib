@@ -10,6 +10,11 @@
 extern "C" {
 #endif
 
+/**
+ * @defgroup dstructs Data structures
+ * @{
+ */
+
 #ifndef DYNARRAY_DEFAULT_SIZE 
 #define DYNARRAY_DEFAULT_SIZE 4
 #endif
@@ -47,12 +52,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
  */
 
 /**
- * @defgroup dstructs Data structures
- * @{
- */
-
-/**
- * @defgroup dstruct_macros Data structure macros
+ * @defgroup api_macros API macros
  * @{
  */
 
@@ -152,7 +152,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
  */
 
 /**
- * @defgroup dstruct_functions Data structure functions
+ * @defgroup api_functions API functions
  * @{
  */
 
