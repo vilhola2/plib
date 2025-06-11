@@ -53,7 +53,7 @@ bool impl_da_push(void **ptr, const void *item, const size_t element_sz) {
     if (unlikely(!impl_da_grow(&h, element_sz))) return false;
     memcpy(h->data + h->len, item, element_sz);
     h->len += element_sz;
-    *ptr = h;
+    *ptr = h->data;
 #ifdef DEBUG
     printf("successfully pushed element to dynarray: len: %zu, cap: %zu\n", h->len, h->cap); 
 #endif

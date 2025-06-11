@@ -82,7 +82,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
 /**
  * @brief Pushes an element into a dynarray.
  *
- * CAUTION! 'arr' must originate from dynarray_create()!
+ * @warning 'arr' must originate from dynarray_create()!
  *
  * @param arr A dynarray to push an element into.
  * @param elem The element to push into the dynarray.
@@ -91,13 +91,16 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
 #define dynarray_push(arr, elem) \
     ({ \
         typeof(*(arr)) elem__ = (elem); \
-        impl_da_push(&(arr), &(elem__), sizeof(elem__)); \
+        void *temp__ = (arr); \
+        bool success__ = impl_da_push(&temp__, &(elem__), sizeof(elem__)); \
+        (arr) = temp__; \
+        success__; \
     })
 
 /**
  * @brief Reserves space for extra elements in a dynarray.
  *
- * CAUTION! 'arr' must originate from dynarray_create()!
+ * @warning 'arr' must originate from dynarray_create()!
  *
  * @param arr A dynarray to reserve space for.
  * @param additional_elements The amount of new elements to reserve space for.
@@ -114,7 +117,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
 /**
  * @brief Returns the length of a dynarray.
  *
- * CAUTION! 'arr' must originate from dynarray_create()!
+ * @warning 'arr' must originate from dynarray_create()!
  *
  * @param arr A dynarray to get the length from.
  */
@@ -124,7 +127,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
 /**
  * @brief Returns the capacity of a dynarray.
  *
- * CAUTION! 'arr' must originate from dynarray_create()!
+ * @warning 'arr' must originate from dynarray_create()!
  *
  * @param arr A dynarray to get the capacity from.
  */
@@ -134,7 +137,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
 /**
  * @brief An iterator for a dynarray.
  *
- * CAUTION! 'arr' must originate from dynarray_create()!
+ * @warning 'arr' must originate from dynarray_create()!
  *
  * @param arr The array to iterate over.
  * @param elem_ptr The name of the element pointer to capture in each iteration.
@@ -159,7 +162,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
 /**
  * @brief Frees the memory of a dynarray.
  *
- * CAUTION! 'arr' must originate from dynarray_create()!
+ * @warning 'arr' must originate from dynarray_create()!
  * 'arr' must not be used after this function is called!
  *
  * @param arr The array to destroy.

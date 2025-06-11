@@ -1,5 +1,5 @@
-#ifndef HINTS_H
-#define HINTS_H
+#ifndef PLIB_HINTS_H
+#define PLIB_HINTS_H
 
 #define ALWAYS_INLINE __attribute__((always_inline)) inline
 #define MAYBE_UNUSED __attribute__((unused))
