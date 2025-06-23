@@ -1,13 +1,6 @@
-/**
- * @brief Internal implementation functions.
- * 
- * These functions assume all input is valid, and are not safe to use directly.
- * Intended to be used by macro wrappers.
- */
-
 #include <stdlib.h>
 #include <string.h>
-#include <plib/dstructs.h>
+#include <plib/dynarray.h>
 #include <plib/hints.h>
 
 #ifdef DEBUG

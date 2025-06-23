@@ -1,9 +1,10 @@
 #ifndef PLIB_H
 #define PLIB_H
 
-#include "dstructs.h"
+#include "dynarray.h"
 #include "intfmt.h"
 #include "io.h"
 #include "hints.h"
+#include "string.h"
 
 #endif

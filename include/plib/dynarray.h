@@ -1,5 +1,5 @@
-#ifndef PLIB_DSTRUCTS_H
-#define PLIB_DSTRUCTS_H
+#ifndef PLIB_DYNARRAY_H
+#define PLIB_DYNARRAY_H
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -15,12 +15,17 @@ extern "C" {
  * @{
  */
 
-#ifndef DYNARRAY_DEFAULT_SIZE 
-#define DYNARRAY_DEFAULT_SIZE 4
+/**
+ * @defgroup dynarray Dynarray
+ * @{
+ */
+
+#ifndef PLIB_DYNARRAY_DEFAULT_SIZE 
+#define PLIB_DYNARRAY_DEFAULT_SIZE 4u
 #endif
 
 /**
- * @defgroup ds_internal_structs Internal structs
+ * @defgroup da_internal_structs Internal structs
  * @{
  */
 
@@ -34,7 +39,7 @@ struct da_header {
  */
 
 /**
- * @defgroup ds_internal_functions Internal functions
+ * @defgroup da_internal_functions Internal functions
  * @{
  */
 
@@ -52,7 +57,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
  */
 
 /**
- * @defgroup ds_api_macros API macros
+ * @defgroup da_api_macros API macros
  * @{
  */
 
@@ -65,7 +70,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
  * @return Returns a pointer to the start of the array.
  */
 #define dynarray_create(type) \
-    impl_da_create(sizeof(type), DYNARRAY_DEFAULT_SIZE)
+    impl_da_create(sizeof(type), PLIB_DYNARRAY_DEFAULT_SIZE)
 
 /**
  * @brief Creates a dynarray with a specified size.
@@ -155,7 +160,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
  */
 
 /**
- * @defgroup ds_api_functions API functions
+ * @defgroup da_api_functions API functions
  * @{
  */
 
@@ -168,8 +173,12 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
  * @param arr The array to destroy.
  */
 MAYBE_UNUSED static ALWAYS_INLINE void dynarray_destroy(void *arr) {
-    if (likely(arr != NULL)) free(impl_get_da_header(arr));
+    free(impl_get_da_header(arr));
 }
+
+/**
+ * @}
+ */
 
 /**
  * @}
