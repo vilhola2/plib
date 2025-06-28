@@ -10,11 +10,12 @@ extern inline size_t string_view_len(const string_view_t *sv) {
 }
 
 extern inline bool string_view_set_offset(string_view_t *sv, const size_t new_offset) {
-    if (unlikely(new_offset > PLIB_STR_MAX || new_offset > string_view_len(sv))) {
+    struct sv_internal *temp = (struct sv_internal *)sv;
+    if (unlikely(new_offset > PLIB_STR_MAX || new_offset > string_len(temp->view))) {
         fprintf(stderr, "string_view.c: Offset is too large!\n");
         return false;
     }
-    ((struct sv_internal *)sv)->offset = new_offset;
+    temp->offset = new_offset;
     return true;
 }
 

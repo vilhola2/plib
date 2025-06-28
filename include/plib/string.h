@@ -120,12 +120,18 @@ bool string_copy(string_t *dest, size_t offset, const string_t *src);
 bool string_ncopy_cstrn(string_t *dest, size_t offset, const char *src, size_t n); 
 bool string_ncopy_sv(string_t *dest, size_t offset, const string_view_t *src, size_t n); 
 bool string_ncopy(string_t *dest, size_t offset, const string_t *src, size_t n); 
+
 bool string_cat_cstr(string_t *dest, const char *src); 
 bool string_cat_sv(string_t *dest, const string_view_t *src); 
 bool string_cat(string_t *dest, const string_t *src); 
 bool string_ncat_cstrn(string_t *dest, const char *src, size_t n); 
 bool string_ncat_sv(string_t *dest, const string_view_t *src, size_t n); 
 bool string_ncat(string_t *dest, const string_t *src, size_t n); 
+
+bool string_set_cstr(string_t *dest, const char *src);
+bool string_set_cstrn(string_t *dest, const char *src, size_t src_len);
+bool string_set_sv(string_t *dest, const string_view_t *src);
+bool string_set(string_t *dest, const string_t *src);
 
 /**
  * @}

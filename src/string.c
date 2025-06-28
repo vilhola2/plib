@@ -160,6 +160,22 @@ extern inline bool string_ncopy(string_t *dest, size_t offset, const string_t *s
     return impl_str_ncopy(dest_str, offset, src_str->str, n);
 }
 
+extern inline bool string_set_cstr(string_t *dest, const char *src) {
+    return string_copy_cstr(dest, 0, src);
+}
+
+extern inline bool string_set_cstrn(string_t *dest, const char *src, size_t src_len) {
+    return string_ncopy_cstrn(dest, 0, src, src_len);
+}
+
+extern inline bool string_set_sv(string_t *dest, const string_view_t *src) {
+    return string_copy_sv(dest, 0, src);
+}
+
+extern inline bool string_set(string_t *dest, const string_t *src) {
+    return string_copy(dest, 0, src);
+}
+
 bool impl_str_cat(struct str_internal *str, const char *src, size_t n) {
     const size_t new_len = str->len + n + 1;
     if (new_len > impl_get_str_cap(str)) {
@@ -205,5 +221,18 @@ extern inline bool string_ncat(string_t *dest, const string_t *src, size_t n) {
     const struct str_internal *src_str = (const struct str_internal *)src;
     struct str_internal *dest_str = (struct str_internal *)dest;
     return impl_str_cat(dest_str, src_str->str, n);
+}
+
+int string_cmp(const string_t *a, const string_t *b) {
+    const char  *a_str = string_as_cstr(a),
+                *b_str = string_as_cstr(b);
+    const size_t a_len = string_len(a),
+                 b_len = string_len(b);
+    const size_t min_len = (a_len < b_len ? a_len : b_len);
+    const int cmp = strncmp(a_str, b_str, min_len);
+    if (cmp != 0) return cmp;
+    if (a_len < b_len) return -1;
+    if (a_len > b_len) return 1;
+    return 0;
 }
 
