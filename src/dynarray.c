@@ -6,7 +6,7 @@
 
 bool impl_da_grow_exp(struct da_header **h, const size_t new_bytes) {
     size_t new_cap = (*h)->cap;
-    while ((*h)->cap < (*h)->len + new_bytes) {
+    while (new_cap < (*h)->len + new_bytes) {
         size_t temp;
         if (unlikely(__builtin_mul_overflow(new_cap, 2, &temp))) {
             fprintf(stderr, "dynarray.c: Capacity multiplication overflow!\n");
