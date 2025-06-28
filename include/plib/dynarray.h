@@ -45,8 +45,8 @@ struct da_header {
 
 void *impl_da_create(const size_t element_sz, const size_t starting_sz);
 bool impl_da_push(void **ptr, const void *item, const size_t element_sz);
-bool impl_da_grow(struct da_header **h, const size_t new_bytes);
-bool impl_da_reserve(struct da_header **h, const size_t element_sz, const size_t additional_elements);
+bool impl_da_grow_exp(struct da_header **h, const size_t new_bytes);
+bool impl_da_reserve(struct da_header **h, const size_t element_sz, const size_t new_sz);
 
 static inline struct da_header *impl_get_da_header(const void *arr) {
     return (struct da_header *)((unsigned char *)arr - offsetof(struct da_header, data));
@@ -103,19 +103,19 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
     })
 
 /**
- * @brief Reserves space for extra elements in a dynarray.
+ * @brief Reserves space for a dynarray.
  *
  * @warning 'arr' must originate from dynarray_create()!
  *
  * @param arr A dynarray to reserve space for.
- * @param additional_elements The amount of new elements to reserve space for.
+ * @param new_elements The amount of new elements to reserve space for.
  * @return Returns true on success, false on failure.
  */
-#define dynarray_reserve(arr, additional_elements) \
+#define dynarray_reserve(arr, new_elements) \
     ({ \
         struct da_header *h__ = impl_get_da_header(arr); \
-        bool success__ = impl_da_reserve(&h__, sizeof(*(arr)), (additional_elements)); \
-        if (likely(success__)) arr = h__->data; \
+        bool success__ = impl_da_reserve(&h__, sizeof(*(arr)), (new_elements)); \
+        if (likely(success__)) (arr) = (typeof(arr))h__->data; \
         success__; \
     })
 
@@ -147,7 +147,7 @@ static inline struct da_header *impl_get_da_header(const void *arr) {
  * @param arr The array to iterate over.
  * @param elem_ptr The name of the element pointer to capture in each iteration.
  */
-#define dynarray_for_each(arr, elem_ptr) \
+#define dynarray_foreach(arr, elem_ptr) \
     for ( \
         typeof(*arr) *(elem_ptr) = (arr), \
         *end__##elem_ptr = (arr) + dynarray_len(arr); \
