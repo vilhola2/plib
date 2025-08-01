@@ -114,6 +114,7 @@ size_t string_len(const string_t *str);
 
 // Dear future me: sorry not sorry :)
 
+bool string_copy_ch(string_t *dest, size_t offset, char src);
 bool string_copy_cstr(string_t *dest, size_t offset, const char *src); 
 bool string_copy_sv(string_t *dest, size_t offset, const string_view_t *src); 
 bool string_copy(string_t *dest, size_t offset, const string_t *src); 

@@ -38,5 +38,9 @@ echo "CMake Generator: $GENERATOR"
 if [[ "$GENERATOR" == *"Ninja"* ]]; then
     (( VERBOSE )) && ninja -v || ninja
 elif [[ "$GENERATOR" == *"Makefiles"* ]]; then
-    make VERBOSE=$VERBOSE
+    if (( VERBOSE )); then
+        make VERBOSE=1
+    else
+        make
+fi
 fi

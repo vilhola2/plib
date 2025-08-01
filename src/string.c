@@ -128,6 +128,27 @@ bool impl_str_ncopy(struct str_internal *dest, size_t offset, const char *src, s
     return true;
 }
 
+bool string_copy_ch(string_t *dest, size_t offset, char src) {
+    struct str_internal *str = (struct str_internal *)dest;
+    if (offset > str->len) {
+        fprintf(stderr, "string.c: Offset '%zu' out of bounds! (len: %zu)\n", offset, str->len);
+        return false;
+    }
+    if (offset == str->len) {
+        if (offset >= impl_get_str_cap(str)) {
+            if (impl_get_str_user_buffer(str)) {
+                fprintf(stderr, "string.c: Buffer size is too small!\n");
+                return false;
+            }
+            if (unlikely(!impl_str_grow_exp(str, str->len + 1))) return false;
+        }
+        str->len += 1;
+    }
+    str->str[offset] = src;
+    str->str[str->len] = '\0';
+    return true;
+}
+
 extern inline bool string_copy_cstr(string_t *dest, size_t offset, const char *src) {
     struct str_internal *str = (struct str_internal *)dest;
     return impl_str_ncopy(str, offset, src, strlen(src));

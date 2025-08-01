@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "hints.h"
+#include "string.h"
 
 /**
  * @defgroup io Input/output
@@ -37,13 +38,11 @@ static ALWAYS_INLINE void impl_bin_generic(const uint64_t value, const int_fast8
  * Reads characters from the given input stream until a newline or EOF is encountered.
  * The newline character will not be included in the string.
  *
- * @warning The caller is responsible for freeing the returned string.
- *
+ * @param str String to write to.
  * @param stream Input stream to read from.
- * @return A malloc'ed string, or NULL on EOF or allocation failure.
- *         The caller must free the returned string.
+ * @return True on success, false on failure.
  */
-char *str_input(FILE *stream);
+bool string_input(string_t *str, FILE *stream);
 
 /**
  * @}
