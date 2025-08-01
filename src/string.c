@@ -115,7 +115,7 @@ bool impl_str_grow_exp(struct str_internal *str, const size_t new_len) {
 
 bool impl_str_ncopy(struct str_internal *dest, size_t offset, const char *src, size_t n) {
     const size_t new_len = offset + n;
-    if (new_len + 1 > impl_get_str_cap(dest)) {
+    if (new_len + 1 >= impl_get_str_cap(dest)) {
         if (impl_get_str_user_buffer(dest)) {
             fprintf(stderr, "string.c: Buffer size is too small!\n");
             return false;
@@ -135,7 +135,7 @@ bool string_copy_ch(string_t *dest, size_t offset, char src) {
         return false;
     }
     if (offset == str->len) {
-        if (offset >= impl_get_str_cap(str)) {
+        if (offset + 1 >= impl_get_str_cap(str)) {
             if (impl_get_str_user_buffer(str)) {
                 fprintf(stderr, "string.c: Buffer size is too small!\n");
                 return false;
