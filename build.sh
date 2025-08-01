@@ -42,5 +42,5 @@ elif [[ "$GENERATOR" == *"Makefiles"* ]]; then
         make VERBOSE=1
     else
         make
-fi
+    fi
 fi
