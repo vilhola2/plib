@@ -35,11 +35,6 @@ extern inline const char *string_as_cstr(const string_t *str) {
     return ((struct str_internal *)str)->str;
 }
 
-extern inline string_view_t string_as_sv(const string_t *str) {
-    struct sv_internal sv = { .view = str };
-    return ucast(string_view_t, sv);
-}
-
 string_t string_create(void) {
     struct str_internal new_str;
     new_str.len = 0;

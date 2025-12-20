@@ -4,6 +4,11 @@
 #include <plib/hints.h>
 #include "include/string_internal.h"
 
+extern inline string_view_t string_as_sv(const string_t *str) {
+    struct sv_internal sv = { .view = str };
+    return ucast(string_view_t, sv);
+}
+
 extern inline size_t string_view_len(const string_view_t *sv) {
     const struct sv_internal *temp = (const struct sv_internal *)sv;
     return string_len(temp->view) - temp->offset;

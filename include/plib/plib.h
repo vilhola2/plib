@@ -7,5 +7,6 @@
 #include "io.h"
 #include "string.h"
 #include "utils.h"
+#include "thread.h"
 
 #endif

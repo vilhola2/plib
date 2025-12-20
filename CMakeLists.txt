@@ -12,9 +12,12 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
 
+find_package(Threads REQUIRED)
+
 file(GLOB C_SOURCES "${CMAKE_SOURCE_DIR}/src/*.c")
 add_library(${PROJECT_NAME} ${C_SOURCES})
 
+target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 if(DEFINED CMAKE_CUSTOM_INSTALL_PREFIX)
