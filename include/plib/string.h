@@ -6,6 +6,8 @@
 #include <stdint.h>
 #include <stdalign.h>
 #include <assert.h>
+#include <stdio.h>
+#include "hints.h"
 
 /**
  * @defgroup dstructs Data structures
@@ -134,6 +136,10 @@ bool string_set_cstrn(string_t *dest, const char *src, size_t src_len);
 bool string_set_sv(string_t *dest, const string_view_t *src);
 bool string_set(string_t *dest, const string_t *src);
 
+static ALWAYS_INLINE void string_print(string_t *str) {
+    printf("%s", string_as_cstr(str));
+}
+
 /**
  * @}
  */
@@ -160,6 +166,10 @@ bool string_view_set_offset(string_view_t *sv, const size_t new_offset);
 size_t string_view_get_offset(const string_view_t *sv);
 
 const char *string_view_as_cstr(const string_view_t *sv);
+
+static ALWAYS_INLINE void string_view_print(string_view_t *str) {
+    printf("%s", string_view_as_cstr(str));
+}
 
 /**
  * @}
