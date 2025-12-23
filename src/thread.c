@@ -9,8 +9,8 @@
 #include <process.h>
 
 DWORD WINAPI thread_start(LPVOID arg) {
-    thread_t *new_thread = (thread_t *)arg;
-    new_thread->retval = new_thread->func(new_thread->arg);
+    thread_t *thread = (thread_t *)arg;
+    thread->retval = thread->func(thread->arg);
     return 0;
 }
 
