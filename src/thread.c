@@ -25,34 +25,33 @@ bool thread_create(thread_t *thread, void *(*func)(void *arg), void *arg) {
 void *thread_join(thread_t *thread) {
     if (unlikely(WaitForSingleObject(thread->handle, INFINITE) != WAIT_OBJECT_0)) return NULL;
     CloseHandle(thread->handle);
+    thread->handle = NULL;
     return thread->retval;
 }
 
 bool thread_detach(thread_t *thread) {
     if (unlikely(!CloseHandle(thread->handle))) return false;
+    thread->handle = NULL;
     return true;
 }
 
 ALWAYS_INLINE bool mutex_create(mutex_t *mutex) {
-    if(unlikely(!(*mutex = CreateMutex(NULL, FALSE, NULL)))) {
-        fprintf(stderr, "CreateMutex error: %d\n", GetLastError());
-        return false;
-    }
+    InitializeCriticalSection(mutex);
     return true;
 }
 
 ALWAYS_INLINE bool mutex_destroy(mutex_t *mutex) {
-    if (unlikely(!CloseHandle(*mutex))) return false;
+    DeleteCriticalSection(mutex);
     return true;
 }
 
 ALWAYS_INLINE bool mutex_lock(mutex_t *mutex) {
-    if (unlikely(WaitForSingleObject(*mutex, INFINITE) != WAIT_OBJECT_0)) return false;
+    EnterCriticalSection(mutex);
     return true;
 }
 
 ALWAYS_INLINE bool mutex_unlock(mutex_t *mutex) {
-    if (unlikely(!ReleaseMutex(*mutex))) return false;
+    LeaveCriticalSection(mutex);
     return true;
 }
 

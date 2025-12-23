@@ -13,7 +13,7 @@ typedef struct {
     void *arg, *retval;
 } thread_t;
 
-typedef HANDLE mutex_t;
+typedef CRITICAL_SECTION mutex_t;
 
 #else
 
